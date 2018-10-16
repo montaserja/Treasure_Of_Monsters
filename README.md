@@ -5,3 +5,5 @@
 ### Project Documents
 - [Software Requirements Specification](../../wiki/SRS)
 
+### Our Project Planning
+- [Scrum](https://github.com/montaserja/Treasure_Of_Monsters/projects)
