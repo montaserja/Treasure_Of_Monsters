@@ -6,4 +6,8 @@
 - [Software Requirements Specification](../../wiki/SRS)
 
 ### Our Project Planning
-- [Scrum](https://github.com/montaserja/Treasure_Of_Monsters/projects)
+- [Project managment system](https://github.com/montaserja/Treasure_Of_Monsters/projects)
+https://github.com/montaserja/Treasure_Of_Monsters/wiki/Diary
+
+### Diary
+- [Diary page](https://github.com/montaserja/Treasure_Of_Monsters/wiki/Diary)
