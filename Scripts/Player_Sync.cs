@@ -7,27 +7,30 @@ public class Player_Sync : NetworkBehaviour
 {
     [SyncVar]
     Vector3 playerPosition;
+    [SyncVar]
+    GameObject Shield;
 
     [SyncVar] private Quaternion syncPlayerRotation;
     [SyncVar] private Quaternion syncCamRotation;
 
-
+    private PlayerScript playerScript;
 
     [SerializeField]
     Transform myTransform;
     [SerializeField]
     Transform CamTransform;
     [SerializeField]
-    float lerpRate = 15f;
+    float lerpRate = 50f;
 
 
-  /*  // Use this for initialization
+
+    // Use this for initialization
     void Start () {
-		
-	}
+        playerScript = GetComponent<PlayerScript>();
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 		
 	}*/
 
@@ -37,6 +40,7 @@ public class Player_Sync : NetworkBehaviour
     {
         TransmitPosition();
         LerpPosition();
+        CmdProtector();
      //   LerpRotation();
     }
 
@@ -62,13 +66,14 @@ public class Player_Sync : NetworkBehaviour
         myTransform.position = Vector3.Lerp(myTransform.position, playerPosition, Time.deltaTime * lerpRate);
     }
     
-    //Called just in the server side which takes the client position
+    //Called just in the client  side and run on the server which takes the client position
     [Command]
     void CmdSendPosition(Vector3 position,Quaternion PlayerRot,Quaternion CamRot)
     {
         syncPlayerRotation = PlayerRot;
         syncCamRotation = CamRot;
         playerPosition = position;
+    
        
     }
 
@@ -82,5 +87,19 @@ public class Player_Sync : NetworkBehaviour
 
         CmdSendPosition(myTransform.position,myTransform.rotation,CamTransform.rotation);
         }
+    }
+
+
+    [Command]
+    void CmdProtector()
+    {
+        // Create the Bullet from the Bullet Prefab
+        var Sheld = playerScript.getProtector();
+
+        this.Shield = Sheld;
+
+    
+
+      
     }
 }

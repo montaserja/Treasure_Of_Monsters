@@ -17,6 +17,7 @@ public class PlayerMotor : MonoBehaviour {
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
+       
     }
 
     public void Move(Vector3 _velocity)
