@@ -52,14 +52,21 @@ public class PlayerSetup : NetworkBehaviour
 
 
 
+    // Vector3 playerPosition;
+
+    // Transform myTransform;
+
+
+
     // Use this for initialization
-    /*here we set the player in random position in the map*/
+
     void Start()
     {
 
         //lobby = GameObject.Find("LobbyManager").GetComponent<NetworkLobbyHook>();
-       
-        transform.position = new Vector3(Random.Range(-500f, 1000f), Random.Range(400f, 500f), Random.Range(-700f, 200f));
+
+        transform.position = new Vector3(Random.Range(-200f, -250f), Random.Range(400f, 500f), Random.Range(-200f, -250f));
+       // transform.position = new Vector3(500, 192, 500);
 
         // set the vertical offset to the object's collider bounds' extends
         if (GetComponent<Collider>() != null)
@@ -76,13 +83,10 @@ public class PlayerSetup : NetworkBehaviour
         // note that the ray starts at 100 units
         Ray ray = new Ray(transform.position + Vector3.up * 100, Vector3.down);
 
-     
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
         {
-       
             if (hit.collider != null)
             {
-              
                 // this is where the gameobject is actually put on the ground
                 transform.position = new Vector3(transform.position.x, hit.point.y + radius, transform.position.z);
             }
@@ -115,6 +119,9 @@ public class PlayerSetup : NetworkBehaviour
         {
 
             // Camera.main.gameObject.SetActive(false);
+           // print("ctre : "+componentsToDisable[0].gameObject.active);
+
+            componentsToDisable[0].gameObject.SetActive(true);
 
             sceneCamera = Camera.main;
 
@@ -201,7 +208,16 @@ public class PlayerSetup : NetworkBehaviour
 
     }
 
-
+    private void Update()
+    {
+        if (isLocalPlayer)
+        {
+            if (componentsToDisable[0].gameObject.active == false)
+            {
+                componentsToDisable[0].gameObject.SetActive(true);
+            }
+        }
+    }
 
 
 

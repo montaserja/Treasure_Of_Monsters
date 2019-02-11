@@ -72,8 +72,12 @@ public class Player : NetworkBehaviour {
 	void Update () {
         if (!isLocalPlayer)
             return;
-       
-        players1 = GameObject.FindGameObjectsWithTag("Player");
+
+        if (Camera.main!=null &&Camera.main.enabled)
+        {
+            Camera.main.gameObject.SetActive(false);
+        }       
+        /*players1 = GameObject.FindGameObjectsWithTag("Player");
         players2 = GameObject.FindGameObjectsWithTag("Player2");
         Player_Sync[] s = new Player_Sync[players1.Length];
         Player_Sync[] s2 = new Player_Sync[players2.Length];
@@ -95,13 +99,17 @@ public class Player : NetworkBehaviour {
                     Vector3 temp = players1[i].transform.position;
                     temp.y = temp.y + 5f;
                     temp.x = temp.x - 1f;
+                    Player2Camera player2Cam = players2[j].GetComponentInChildren<Player2Camera>();
+                    if(players1[i]!=null)
+                    player2Cam.setplayer(players1[i].transform);
+                    Debug.Log("players1" + players1[i] + " playercam: " + player2Cam);
                     //this.transform.position = temp;
                     players2[j].transform.position = temp ;
                 }
             }
         }
         
-
+    */
 
 
 

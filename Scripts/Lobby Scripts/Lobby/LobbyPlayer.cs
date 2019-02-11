@@ -21,8 +21,20 @@ namespace Prototype.NetworkLobby
         public Button waitingPlayerButton;
         public Button removePlayerButton;
 
+        public Dropdown dropDown;
+
+
+        [SyncVar(hook = "OnMySelect")]
+        public int value = 0;
+
+        public int playersNum = 0;
+        List<string> list;
+
+
         public GameObject localIcone;
         public GameObject remoteIcone;
+
+        public int playerPrefab = 0;
 
         //OnMyName function will be invoked on clients when server change the value of playerName
         [SyncVar(hook = "OnMyName")]
@@ -30,10 +42,11 @@ namespace Prototype.NetworkLobby
         [SyncVar(hook = "OnMyColor")]
         public Color playerColor = Color.white;
 
+
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
 
-        static Color JoinColor = new Color(255.0f/255.0f, 0.0f, 101.0f/255.0f,1.0f);
+        static Color JoinColor = new Color(255.0f / 255.0f, 0.0f, 101.0f / 255.0f, 1.0f);
         static Color NotReadyColor = new Color(34.0f / 255.0f, 44 / 255.0f, 55.0f / 255.0f, 1.0f);
         static Color ReadyColor = new Color(0.0f, 204.0f / 255.0f, 204.0f / 255.0f, 1.0f);
         static Color TransparentColor = new Color(0, 0, 0, 0);
@@ -45,6 +58,7 @@ namespace Prototype.NetworkLobby
         public override void OnClientEnterLobby()
         {
             base.OnClientEnterLobby();
+
 
             if (LobbyManager.s_Singleton != null) LobbyManager.s_Singleton.OnPlayersNumberModified(1);
 
@@ -73,7 +87,7 @@ namespace Prototype.NetworkLobby
             //if we return from a game, color of text can still be the one for "Ready"
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
 
-           SetupLocalPlayer();
+            SetupLocalPlayer();
         }
 
         void ChangeReadyButtonColor(Color c)
@@ -89,6 +103,7 @@ namespace Prototype.NetworkLobby
         void SetupOtherPlayer()
         {
             nameInput.interactable = false;
+            dropDown.interactable = false;
             removePlayerButton.interactable = NetworkServer.active;
 
             ChangeReadyButtonColor(NotReadyColor);
@@ -104,6 +119,7 @@ namespace Prototype.NetworkLobby
             nameInput.interactable = true;
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
+            dropDown.interactable = true;
 
             CheckRemoveButton();
 
@@ -117,7 +133,7 @@ namespace Prototype.NetworkLobby
 
             //have to use child count of player prefab already setup as "this.slot" is not set yet
             if (playerName == "")
-                CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
+                CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount - 1));
 
             //we switch from simple name display to name input
             colorButton.interactable = true;
@@ -162,6 +178,7 @@ namespace Prototype.NetworkLobby
                 readyButton.interactable = false;
                 colorButton.interactable = false;
                 nameInput.interactable = false;
+                dropDown.interactable = false;
             }
             else
             {
@@ -176,10 +193,76 @@ namespace Prototype.NetworkLobby
             }
         }
 
+
+
+
+
+
+
+
+
+
         public void OnPlayerListChanged(int idx)
-        { 
+        {
             GetComponent<Image>().color = (idx % 2 == 0) ? EvenRowColor : OddRowColor;
+
+            playersNum = LobbyPlayerList._instance.playersNumber();
+            // playersNum += 5;
+            //  playersNum /= 2;
+            // Debug.Log(playersNum);
+
+
+            list = new List<string>();
+            for (int i = 0; i < playersNum / 2; i++)
+            {
+                list.Add(i.ToString());
+            }
+
+            dropDown.ClearOptions();
+            dropDown.AddOptions(list);
+            dropDown.value = idx / 2;
+
+
         }
+
+        public void Dropdown_IndexChanged(int index)
+        {
+
+            if (isServer)
+            {
+                OnMySelect(index);
+            }
+            else
+            {
+
+                CmdOnMySelect(index);
+            }
+
+        }
+
+        [Command]
+        void CmdOnMySelect(int index)
+        {
+            OnMySelect(index);
+        }
+
+        public void OnMySelect(int index)
+        {
+            value = index;
+            dropDown.value = index;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         ///===== callback from sync var
 
@@ -206,7 +289,11 @@ namespace Prototype.NetworkLobby
 
         public void OnReadyClicked()
         {
-            SendReadyToBeginMessage();
+            if (LobbyPlayerList._instance.CheckPlayerDropdown())
+            {
+
+                SendReadyToBeginMessage();
+            }
         }
 
         public void OnNameChanged(string str)
@@ -222,7 +309,7 @@ namespace Prototype.NetworkLobby
             }
             else if (isServer)
                 LobbyManager.s_Singleton.KickPlayer(connectionToClient);
-                
+
         }
 
         public void ToggleJoinButton(bool enabled)

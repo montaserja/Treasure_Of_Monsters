@@ -66,5 +66,34 @@ namespace Prototype.NetworkLobby
                 ++i;
             }
         }
+
+        public bool CheckPlayerDropdown()
+        {
+            int counter = 0;
+            foreach (LobbyPlayer p in _players)
+            {
+                foreach (LobbyPlayer q in _players)
+                {
+                    if (p != q)
+                    {
+                        if (p.value == q.value)
+                        {
+                            p.playerPrefab = 0;
+                            q.playerPrefab = 1;
+                            counter++;
+                        }
+                        if (counter > 1)
+                            return false;
+                    }
+                }
+                counter = 0;  
+            }
+            return true;
+        }
+
+        public int playersNumber()
+        {
+            return _players.Count;
+        }
     }
 }
