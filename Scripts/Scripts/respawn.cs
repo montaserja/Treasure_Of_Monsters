@@ -16,6 +16,7 @@ public class respawn : NetworkBehaviour {
     void Start () {
         if (!isLocalPlayer)
             return;
+
         create = this.GetComponent<createHouses>();
     }
 	

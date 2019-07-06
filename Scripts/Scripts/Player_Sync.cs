@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class Player_Sync : NetworkBehaviour
 {
     
-    public int team;
+    public int team=100;
     public int playerPrefab;
     public GameObject Player1;
     public GameObject Player0;
@@ -17,12 +17,15 @@ public class Player_Sync : NetworkBehaviour
     private PlayerHealth health;
     public bool respawn = false;
     public bool defined = false;
+    private GameObject myTeamMate;
+
 
 
     private void Start()
     {
         if (!isLocalPlayer)
             return;
+
     }
 
     //all the players send the team number to rest of the players
@@ -44,7 +47,22 @@ public class Player_Sync : NetworkBehaviour
             find();
         }else if (playerPrefab==0)
         {
+            if (!myTeamMate)
+            {
+                players2 = GameObject.FindGameObjectsWithTag("Player2");
+                Player_Sync[] s1 = new Player_Sync[players2.Length];
+                for (int i = 0; i < players2.Length; i++)
+                    s1[i] = players2[i].GetComponent<Player_Sync>();
 
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i].team == this.team && s1[i].team!=100)
+                    {
+
+                        myTeamMate = players2[i];
+                    }
+                }
+            }
             if (!defined) { 
             health = GetComponent<PlayerHealth>();
             }
@@ -137,9 +155,10 @@ public class Player_Sync : NetworkBehaviour
 
             for (int i = 0; i < s.Length; i++)
             {
-                if (s[i].team == this.team)
+                if (s[i].team == this.team && this.team!=100)
                 {
-                    Debug.Log(s[i].team + " myteam : " +this.team);
+                    // Debug.Log(s[i].team + " myteam : " +this.team);
+                    myTeamMate = players1[i];
                     Vector3 temp = players1[i].transform.position;
                     temp.y = temp.y + 5f;
                     temp.x = temp.x - 1f;
@@ -153,15 +172,13 @@ public class Player_Sync : NetworkBehaviour
                 }
             }
         }
-        else
+        else if (myTeamMate==null||myTeamMate.GetComponent<PlayerHealth>().death)
         {
-       
-
-            if (health.death)
-            {
-                StartCoroutine(gg());
-            }
-          
+            StartCoroutine(gg());  
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartCoroutine(gg());
         }
     }
 
@@ -170,7 +187,7 @@ public class Player_Sync : NetworkBehaviour
     public void Respawn()
     {
         var conn = GetComponent<NetworkIdentity>().connectionToClient;
-        var playerToSpawn = Instantiate<GameObject>(Player0, Vector3.zero, transform.rotation); ;
+        var playerToSpawn = Instantiate<GameObject>(Player0, Vector3.zero, transform.rotation); 
         if (playerPrefab == 0)
         {
             Destroy(playerToSpawn);
@@ -214,5 +231,10 @@ public class Player_Sync : NetworkBehaviour
         else
             CmdRespawn();
 
+    }
+
+    public GameObject getTeamMate()
+    {
+        return myTeamMate;
     }
 }

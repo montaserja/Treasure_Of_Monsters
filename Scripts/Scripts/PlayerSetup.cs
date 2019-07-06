@@ -62,7 +62,6 @@ public class PlayerSetup : NetworkBehaviour
 
     void Start()
     {
-
         //lobby = GameObject.Find("LobbyManager").GetComponent<NetworkLobbyHook>();
 
         transform.position = new Vector3(Random.Range(-200f, -250f), Random.Range(400f, 500f), Random.Range(-200f, -250f));
@@ -143,7 +142,7 @@ public class PlayerSetup : NetworkBehaviour
 
 
 
-        RegisterPlayer();
+        //RegisterPlayer(); ibra 
 
 
 
@@ -163,7 +162,6 @@ public class PlayerSetup : NetworkBehaviour
         string _ID = "Player " + GetComponent<NetworkIdentity>().netId;
 
         transform.name = lobby.getName();
-
     }
 
 
