@@ -19,8 +19,9 @@ public class status :  NetworkBehaviour{
     }
     void OnTriggerStay(Collider obj)
     {
-        if (obj.gameObject.tag == "treasure" && Input.GetKeyUp(KeyCode.E) && hasKey)
+        if (obj.gameObject.tag == "treasure" && Input.GetKeyUp(KeyCode.E) && hasKey)//if the player have the key of the treasure
         {
+			//open the treasure
             obj.GetComponent<treasure_box>().close=false;
             Vector3 direction = obj.transform.position - this.transform.position;
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 1f);

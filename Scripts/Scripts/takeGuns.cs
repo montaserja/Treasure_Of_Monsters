@@ -68,7 +68,7 @@ public class takeGuns : NetworkBehaviour {
         }
 
             CmdSelect(selected);
-        
+        /*get the team mate*/
         if (myTeamMate == null || TeamMateCollect ==null)
         {
             sync = this.GetComponent<Player_Sync>();
@@ -79,7 +79,7 @@ public class takeGuns : NetworkBehaviour {
            
         }
 
-        if (myTeamMate != null)
+        if (myTeamMate != null)//treasure key 
         {
             try
             {
@@ -100,7 +100,7 @@ public class takeGuns : NetworkBehaviour {
         }
 
 
-        if (TeamMateCollect != null) {
+        if (TeamMateCollect != null) {//when the teammate take somthing this player and set the correct image
             
             if(TeamMateCollect.Elictricity != guns[EIndex])
             {
@@ -140,7 +140,7 @@ public class takeGuns : NetworkBehaviour {
         }
 
 
-
+        //selecting the gun
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {   
             selectgun(0);
@@ -165,7 +165,7 @@ public class takeGuns : NetworkBehaviour {
                 Destroy(wallToSpawn);
         }
 
-        if (isDefend)
+        if (isDefend)//creating walls to defend
         {
             if (Cam != null) { 
                 myRay = Cam.ScreenPointToRay(Input.mousePosition);

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/*script for first player when taking the powerups sending to the second player */
+
 public class Collect_PowerUp : NetworkBehaviour {
-   // public int Water = 0, Elictricity = 0, Fire = 0, Health = 0;
     public int Water = 0,Elictricity=0,Fire=0,Health=0;
     public int WaterD = 0, ElictricityD = 0, FireD = 0;
     public int[] guns;

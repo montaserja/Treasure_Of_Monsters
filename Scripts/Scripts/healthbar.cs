@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class healthbar : NetworkBehaviour {
-
+/*set the health bar as image*/
     public Image image;
     public Canvas can;
     private PlayerHealth health;

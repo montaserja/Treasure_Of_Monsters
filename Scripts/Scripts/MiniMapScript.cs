@@ -8,6 +8,7 @@ public class MiniMapScript : MonoBehaviour {
 
     private void LateUpdate()
     {
+		//Camera runs after the player
         Vector3 newPosition = player.position;
         newPosition.y = newPosition.y + 15;
         transform.position = newPosition;

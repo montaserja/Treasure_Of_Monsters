@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*open and closing the house door*/
 public class doorScript : MonoBehaviour {
 
     public bool open,canOpen;

@@ -33,7 +33,7 @@ public class score : MonoBehaviour {
             && !GetComponent<PlayerHealth>().death)
         {
             RaycastHit hit;
-            Ray ray = new Ray(GetComponent<PlayerAttacks>().ShootingPoint.transform.position, transform.forward);
+            Ray ray = new Ray(GetComponent<PlayerAttacks>().ShootingPoint.transform.position, transform.forward);//raycacst to get what are we attacking
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask) )
             {
                 if (hit.collider.gameObject.tag == "Demon_Lord" || hit.collider.gameObject.tag == "Spider" || 

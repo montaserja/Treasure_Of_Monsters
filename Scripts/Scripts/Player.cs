@@ -77,39 +77,7 @@ public class Player : NetworkBehaviour {
         {
             Camera.main.gameObject.SetActive(false);
         }       
-        /*players1 = GameObject.FindGameObjectsWithTag("Player");
-        players2 = GameObject.FindGameObjectsWithTag("Player2");
-        Player_Sync[] s = new Player_Sync[players1.Length];
-        Player_Sync[] s2 = new Player_Sync[players2.Length];
-
-
-        for (int i = 0; i < players1.Length; i++)
-            s[i] = players1[i].GetComponent<Player_Sync>();
-
-        for (int i = 0; i < players2.Length; i++)
-            s2[i] = players2[i].GetComponent<Player_Sync>();
-
-        for (int i = 0; i < players1.Length; i++)
-        {
-            for (int j = 0; j < players2.Length; j++)
-            {
-                if (s[i].team == s2[j].team)
-                {
-                    Debug.Log(s[i].team +" "+i+ "  "+j+" "+s2[j].team);
-                    Vector3 temp = players1[i].transform.position;
-                    temp.y = temp.y + 5f;
-                    temp.x = temp.x - 1f;
-                    Player2Camera player2Cam = players2[j].GetComponentInChildren<Player2Camera>();
-                    if(players1[i]!=null)
-                    player2Cam.setplayer(players1[i].transform);
-                    Debug.Log("players1" + players1[i] + " playercam: " + player2Cam);
-                    //this.transform.position = temp;
-                    players2[j].transform.position = temp ;
-                }
-            }
-        }
-        
-    */
+      
 
 
 

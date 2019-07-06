@@ -11,10 +11,6 @@ public class PlayerSetup : NetworkBehaviour
 
 
 
-    // public float positionUpdateRate = 0.2f;
-
-    // public float smooth = 15;
-
 
 
     private NetworkLobbyHook lobby;

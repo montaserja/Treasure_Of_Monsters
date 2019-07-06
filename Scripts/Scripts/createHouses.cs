@@ -32,7 +32,7 @@ public class createHouses : NetworkBehaviour
     void Update()
     {
 
-        if (isServer && !mapIsOk)
+        if (isServer && !mapIsOk)//if the map is ready then create the houses
         {
             players1 = GameObject.FindGameObjectsWithTag("Player");
              players2 = GameObject.FindGameObjectsWithTag("Player2");
@@ -46,7 +46,7 @@ public class createHouses : NetworkBehaviour
             }
         }
     }
-
+	/*get the map height and straight it so we can spawn the house*/
     private void CreateHouses()
     {
         int count1 = 0;

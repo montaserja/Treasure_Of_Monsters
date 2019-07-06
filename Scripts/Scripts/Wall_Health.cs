@@ -11,7 +11,7 @@ public class Wall_Health : NetworkBehaviour {
     void Start () {
         ps = GetComponent<ParticleSystem>();
         
-        if (this.tag == "ElectricWall")
+        if (this.tag == "ElectricWall")//set the damage for the wall
         {
             ElectDamage = 1f;
             FireDamage = 10f;
@@ -36,7 +36,7 @@ public class Wall_Health : NetworkBehaviour {
 		
 	}
 
-    private void OnParticleCollision(GameObject other)
+    private void OnParticleCollision(GameObject other)//taking damage
     {
         getDamage(other);
         var emission = ps.emission;

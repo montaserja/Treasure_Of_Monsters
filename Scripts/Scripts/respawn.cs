@@ -22,6 +22,7 @@ public class respawn : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //update the team to all the players
         Cmdteam();
         CmdPrefab();
         if (isServer)
@@ -111,6 +112,7 @@ public class respawn : NetworkBehaviour {
 
 
     /**************************************************************************************/
+    /*destroy the empty prefab and create the suitable prefab for each player */
     void Spawn(int prefab)
     {
     
